@@ -64,7 +64,6 @@ public class MyRestController {
         userList.add(user1);
         userList.add(user2);
         userList.add(user3);
-
         return userList;
     }
     
@@ -74,9 +73,16 @@ public class MyRestController {
      * 
      */
     
-    /* public userDto getUserMsg(){
+
+    @GetMapping("/userParams")
+    public userDto getId(@RequestParam(required = false) Integer id) {
+
+        userDto userDto1= new userDto("Roboto", "camaleon", 10);  
+        System.out.println(id);
+        userDto1.setId(id);
         
+        return userDto1;//return id ;
     }
-     */
+    
 
 }
