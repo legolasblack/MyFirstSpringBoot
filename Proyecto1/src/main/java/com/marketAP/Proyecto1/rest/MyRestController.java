@@ -2,17 +2,17 @@ package com.marketAP.Proyecto1.rest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import com.marketAP.Proyecto1.models.User;
 import com.marketAP.Proyecto1.models.userDto;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-
 
 @RestController
 @RequestMapping("/apiv1")
@@ -34,11 +34,11 @@ public class MyRestController {
         return "Mae Govannen";
     }
 
-
-/*Este metodo es dependiente de la clase user creada y definida previamente 
- * en las carpetas models, y nos regresa el objeto por medio de la clase map
- * y hash map 
- */
+    /*
+     * Este metodo es dependiente de la clase user creada y definida previamente
+     * en las carpetas models, y nos regresa el objeto por medio de la clase map
+     * y hash map
+     */
     @GetMapping("/user")
     public Map<String, Object> getMethodName() {
         Map<String, Object> response = new HashMap<>();
@@ -48,16 +48,16 @@ public class MyRestController {
         return response;
     }
 
-
-    /*En este  metodo devolveremos una lista de usuarios utilizando la clase 
+    /*
+     * En este metodo devolveremos una lista de usuarios utilizando la clase
      * previamente definida en la carpeta models
-    */
+     */
 
     @GetMapping("/usersList")
     public List<User> getUserList() {
-        User user1= new User("Larry","Cañonga",31);
-        User user2= new User("Benja","Lamelami",21);
-        User user3= new User("Benito","Camesta",41);
+        User user1 = new User("Larry", "Cañonga", 31);
+        User user2 = new User("Benja", "Lamelami", 21);
+        User user3 = new User("Benito", "Camesta", 41);
 
         List<User> userList = new ArrayList<>();
 
@@ -66,23 +66,55 @@ public class MyRestController {
         userList.add(user3);
         return userList;
     }
-    
 
-    /*Sintaxis para mandar un parametro en el request
+    /*
+     * Sintaxis para mandar un parametro en el request
      * aqui mismo se guardara la url:
-     * 
+     * http://localhost:8080/apiv1/userParams?id=5
+     * En este tipo de envio se tiene que nombrar la variable
+     * dentro de la url si no regresara un null
      */
-    
 
     @GetMapping("/userParams")
+    // tuvimos que utilizar integer para no regresar errores con variables nulls
     public userDto getId(@RequestParam(required = false) Integer id) {
 
-        userDto userDto1= new userDto("Roboto", "camaleon", 10);  
-        System.out.println(id);
+        userDto userDto1 = new userDto("Roboto", "camaleon", 10);
         userDto1.setId(id);
-        
-        return userDto1;//return id ;
+
+        return userDto1;// return id ;
     }
-    
+
+    @GetMapping({ "/userParamsUrl", "/userParamsUrl/", "/userParamsUrl/{id}" })
+    public userDto getIdParam(@PathVariable(required = false) Integer id) {
+        /*
+         * if (id == null) {
+         * // Manejar el caso cuando id es null
+         * id = null; // o cualquier valor predeterminado que prefieras
+         * }
+         */
+
+        userDto userDto1 = new userDto("Roboto2", "camaleon2", 10);
+        userDto1.setId(id);
+
+        return userDto1;
+    }
+
+    @GetMapping({"/paramMix","/paramMix/","/paramMix/{nombre}","/paramMix/{nombre}/","/paramMix/{nombre}/{id}"})
+    public Map<String, Object> getParamsMix(@PathVariable(required = false) String nombre, @PathVariable(required = false) Integer id) {
+        userDto userDto1 = new userDto(nombre, "camaleon2", 10);
+        userDto1.setId(id);
+        //Map<String, Object> jsonResponse = new HashMap<>();
+        Map<String, Object> jsonResponse = new LinkedHashMap<>();
+
+        jsonResponse.put("nombreRecibido", nombre);
+        jsonResponse.put("idRecibido", id);
+        jsonResponse.put("objectUser", userDto1);
+        
+
+        System.out.println(jsonResponse);
+        return jsonResponse;
+
+    }
 
 }
