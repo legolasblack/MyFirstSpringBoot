@@ -1,6 +1,6 @@
 package com.marketAP.Proyecto1.models;
 
-public class userDto extends User {
+public class UserDto extends User {
 
     private String message;
     private Integer id;
@@ -13,12 +13,16 @@ public class userDto extends User {
         this.id = id;
     }
 
-    public userDto(String name, String lastName, int age, String message) {
+    public UserDto() {
+        super();
+    }
+
+    public UserDto(String name, String lastName, int age, String message) {
         super(name, lastName, age);
         this.message = message;
     }
 
-    public userDto(String name, String lastName, int age) {
+    public UserDto(String name, String lastName, int age) {
         super(name, lastName, age);
         
         // TODO Auto-generated constructor stub

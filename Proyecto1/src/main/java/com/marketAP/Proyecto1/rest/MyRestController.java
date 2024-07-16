@@ -5,11 +5,15 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.marketAP.Proyecto1.models.User;
-import com.marketAP.Proyecto1.models.userDto;
+import com.marketAP.Proyecto1.models.UserDto;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +22,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/apiv1")
 public class MyRestController {
 
+    @Value("${config.userDb}")
+    private String user;
+    @Value("${config.passDb}")
+    private String pass;
+    @Value("${config.hostname}")
+    private String host;
     /*
      * En esta api rest controller definiremos varias practicas las cuales
      * no iran ayudando a construir diferentes tipos y secciones de codigo
@@ -77,16 +87,16 @@ public class MyRestController {
 
     @GetMapping("/userParams")
     // tuvimos que utilizar integer para no regresar errores con variables nulls
-    public userDto getId(@RequestParam(required = false) Integer id) {
+    public UserDto getId(@RequestParam(required = false) Integer id) {
 
-        userDto userDto1 = new userDto("Roboto", "camaleon", 10);
-        userDto1.setId(id);
+        UserDto UserDto1 = new UserDto("Roboto", "camaleon", 10);
+        UserDto1.setId(id);
 
-        return userDto1;// return id ;
+        return UserDto1;// return id ;
     }
 
     @GetMapping({ "/userParamsUrl", "/userParamsUrl/", "/userParamsUrl/{id}" })
-    public userDto getIdParam(@PathVariable(required = false) Integer id) {
+    public UserDto getIdParam(@PathVariable(required = false) Integer id) {
         /*
          * if (id == null) {
          * // Manejar el caso cuando id es null
@@ -94,27 +104,44 @@ public class MyRestController {
          * }
          */
 
-        userDto userDto1 = new userDto("Roboto2", "camaleon2", 10);
-        userDto1.setId(id);
+        UserDto UserDto1 = new UserDto("Roboto2", "camaleon2", 10);
+        UserDto1.setId(id);
 
-        return userDto1;
+        return UserDto1;
     }
 
-    @GetMapping({"/paramMix","/paramMix/","/paramMix/{nombre}","/paramMix/{nombre}/","/paramMix/{nombre}/{id}"})
-    public Map<String, Object> getParamsMix(@PathVariable(required = false) String nombre, @PathVariable(required = false) Integer id) {
-        userDto userDto1 = new userDto(nombre, "camaleon2", 10);
-        userDto1.setId(id);
-        //Map<String, Object> jsonResponse = new HashMap<>();
+    @GetMapping({ "/paramMix", "/paramMix/", "/paramMix/{nombre}", "/paramMix/{nombre}/", "/paramMix/{nombre}/{id}" })
+    public Map<String, Object> getParamsMix(@PathVariable(required = false) String nombre,
+            @PathVariable(required = false) Integer id) {
+        UserDto UserDto1 = new UserDto(nombre, "camaleon2", 10);
+        UserDto1.setId(id);
+        // Map<String, Object> jsonResponse = new HashMap<>();
         Map<String, Object> jsonResponse = new LinkedHashMap<>();
 
         jsonResponse.put("nombreRecibido", nombre);
         jsonResponse.put("idRecibido", id);
-        jsonResponse.put("objectUser", userDto1);
-        
+        jsonResponse.put("objectUser", UserDto1);
 
         System.out.println(jsonResponse);
         return jsonResponse;
 
+    }
+
+    @PostMapping("/postExample")
+    public UserDto postExample(@RequestBody UserDto userRequest) {
+        UserDto usuarioprueba = userRequest;
+        return usuarioprueba;
+    }
+
+    @GetMapping("/getDatosConexion")
+    public Map<String, Object> getDatosConexion() {
+
+        Map<String, Object> dataConexionJson = new LinkedHashMap();
+        dataConexionJson.put("User", user);
+        dataConexionJson.put("password", pass);
+        dataConexionJson.put("hostname", host);
+
+        return dataConexionJson;
     }
 
 }

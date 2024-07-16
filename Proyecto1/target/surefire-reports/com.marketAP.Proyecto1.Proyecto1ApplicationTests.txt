@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.marketAP.Proyecto1.Proyecto1ApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.980 s -- in com.marketAP.Proyecto1.Proyecto1ApplicationTests
