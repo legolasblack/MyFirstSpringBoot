@@ -2,11 +2,16 @@ package com.marketapp.dependencyinyection.repositories;
 
 import java.util.Arrays;
 import java.util.List;
+
+import org.springframework.stereotype.Component;
+
 import com.marketapp.dependencyinyection.models.Product;
 
-public class ProductRepository {
-
+@Component
+public class ProductRepository implements IProductRepository {
+    /*---------------Seccion de metodos----------.---------------- */
     private List<Product> data;
+    /*-------------Seccion de metodos final----------------------- */
 
     public ProductRepository() {
         this.data = Arrays.asList(
@@ -18,10 +23,15 @@ public class ProductRepository {
         );
     }
 
+
+    @Override
     public List<Product> findAll(){ 
         return data;
     }
 
+
+
+    @Override
     public Product findById(Long id){
         return data.stream().filter(p -> p.getId().equals(id)).findFirst().orElseThrow();
     }

@@ -1,6 +1,9 @@
 package com.marketapp.dependencyinyection.models;
 
-public class Product {
+
+
+
+public class Product implements Cloneable{
 
     private Long id;
     private String name;
@@ -34,6 +37,8 @@ public class Product {
     public void setPrice(Long price) {
         this.price = price;
     }
-    
+    public Product clone(){
+        return new Product(this.getId(),this.getName(),this.getPrice());
+    }
 
 }
