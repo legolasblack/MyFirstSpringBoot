@@ -2,7 +2,7 @@ package com.marketapp.dependencyinyection.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 import com.marketapp.dependencyinyection.models.Product;
-import com.marketapp.dependencyinyection.services.ProductService;
+import com.marketapp.dependencyinyection.services.IProductService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class ProductRestController {
 
     @Autowired
-    ProductService service;
+    IProductService service;
 
     @GetMapping("/helloWord")
     public Map<String, Object> getSaludo() {

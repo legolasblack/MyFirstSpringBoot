@@ -7,13 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.marketapp.dependencyinyection.models.Product;
-import com.marketapp.dependencyinyection.repositories.ProductRepository;
+import com.marketapp.dependencyinyection.repositories.IProductRepository;
+
 
 @Component
-public class ProductService {
+public class ProductService implements IProductService{
 
     @Autowired
-    private ProductRepository repository;
+    private IProductRepository repository;
 
     public List<Product> findAll(){
         return repository.findAll().stream().map(p -> {
