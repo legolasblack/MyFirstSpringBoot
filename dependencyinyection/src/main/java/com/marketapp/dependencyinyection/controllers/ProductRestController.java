@@ -14,7 +14,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 @RequestMapping("/v1")
 public class ProductRestController {
-
+/*Esta practica esta dedicada a ver los diferentes tipos de inyeccion que se puede tener dentro 
+ * de una clase en concreto para desacoplar de una manera mas facil una implementacion y meter 
+ * ota sin mover nada de codigo
+ * 
+ * metodo numero 1
+ * 
+ * por medio de la clase y el un @autowired
+*/
     @Autowired
     IProductService service;
 
